@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SEF.CMEPage">
+    <ContentPage.Content>
+        <Grid Padding="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <ScrollView Grid.Row="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Text="Date" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+                    <Label Grid.Row="1" Grid.Column="0" Text="Latitude" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+                    <Label Grid.Row="2" Grid.Column="0" Text="Longtitude" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+                    <Label Grid.Row="3" Grid.Column="0" Text="Half Angle" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+                    <Label Grid.Row="4" Grid.Column="0" Text="Speed" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+                    <Label Grid.Row="5" Grid.Column="0" Text="Type" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+                    <Label Grid.Row="6" Grid.Column="0" Text="Note:" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+                    <Label Grid.Row="8" Grid.Column="0" Text="Link:" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+
+                    <Label Grid.Row="0" Grid.Column="2" Text="{Binding Date}" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+                    <Label Grid.Row="1" Grid.Column="2" Text="{Binding Latitude}" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+                    <Label Grid.Row="2" Grid.Column="2" Text="{Binding Longitude}" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+                    <Label Grid.Row="3" Grid.Column="2" Text="{Binding HalfAngle}" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+                    <Label Grid.Row="4" Grid.Column="2" Text="{Binding Speed}" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+                    <Label Grid.Row="5" Grid.Column="2" Text="{Binding Type}" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+                    <Label Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Note}" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+                    <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Link}" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+                </Grid>
+            </ScrollView>
+            <Image Grid.Row="2"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

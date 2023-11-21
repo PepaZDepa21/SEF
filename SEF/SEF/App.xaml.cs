@@ -13,7 +13,7 @@ namespace SEF
             MainPage = new NavigationPage(new MainPage())
             {
                 HeightRequest = 80,
-                BarBackgroundColor = Color.FromRgb(46, 35, 32),
+                BarBackgroundColor = Color.FromHex("#011627"),
                 BackgroundColor = Color.FromHex("#171D1C"),
                 BarTextColor = Color.FromHex("#B8CDF8"),
             };

@@ -10,23 +10,58 @@ namespace SEF
 {
     public partial class MainPage : ContentPage
     {
-        public SpaceEvent spaceEvent;
+        public Filter fil;
+        public string filteredEvent;
         public MainPage()
         {
             InitializeComponent();
-            spaceEvent = new SpaceEvent();
+            fil = new Filter(start: DateTime.Now, end: DateTime.Now);
             Title = "Space Event Finder";
-            eventsOptions.ItemsSource = SpaceEvent.EventOptions;
-            BindingContext = spaceEvent;
+            eventsOptions.ItemsSource = Filter.EventOptions;
+            BindingContext = fil;
         }
 
-        private void Search_Clicked(object sender, EventArgs e)
+        private async void Search_Clicked(object sender, EventArgs e)
         {
-               
+            if (!fil.IsOK())
+            {
+                await DisplayAlert("Cannot start search", "Some values are inappropriate", "Ok");
+                return;
+            }
+            filteredEvent = eventsOptions.SelectedItem.ToString();
+            if (filteredEvent == "Coronal Mass Ejection")
+            {
+                SpaceEvent.AllEvents.Add(new CME(-20.0, 120.4, 31.0, 674.0, "C", "F", "CME 1", "16-11-2023", "L"));
+                UpdateLW();
+            }
+
+        }
+        private void Details_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                Button button = (Button)sender;
+                Navigation.PushAsync(new CMEPage(SpaceEvent.AllEvents.IndexOf((SpaceEvent)button.BindingContext)));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public void UpdateLW()
+        {
+            EventsLW.ItemsSource = null;
+            EventsLW.ItemsSource = SpaceEvent.AllEvents;
+        }
+        public void ClearEvents()
+        {
+            SpaceEvent.AllEvents.Clear();
+            UpdateLW();
         }
     }
 
-    public class SpaceEvent: INotifyPropertyChanged
+    public class Filter: INotifyPropertyChanged
     {
         public static List<string> EventOptions = new List<string>() 
             {
@@ -62,12 +97,9 @@ namespace SEF
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public SpaceEvent()
-        {
+        public Filter() { }
 
-        }
-
-        public SpaceEvent(DateTime start, DateTime end)
+        public Filter(DateTime start, DateTime end)
         {
             StartDate = start;
             EndDate = end;
@@ -97,38 +129,135 @@ namespace SEF
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
-        
+        public bool IsOK() => APIKey != string.Empty && EventOption != string.Empty && DateTime.Compare(StartDate, EndDate) <= 0;
     }
-    public class CME //Coronal Mass Ejection
+    
+    public class SpaceEvent
     {
-        public static List<CME> AllEvents = new List<CME>();
+        public Guid ID { get; set; }
+        private string name;
+        public string Name
+        {
+            get => name;
+            set => name = value;
+        }
+
+        public SpaceEvent() { }
+        public SpaceEvent(string eventName, string eventDate, string eventLink)
+        {
+            ID = Guid.NewGuid();
+            Name = eventName;
+            Date = eventDate;
+            link = eventLink;
+        }
+        public static List<SpaceEvent> AllEvents = new List<SpaceEvent>();
+        private string date;
+        public string Date { get => date; set => date = value; }
+        private string link;
+        public string Link { get => link; set => link = value; }
     }
-    public class GMS //Geomagnetic storm
+    
+    public class CME : SpaceEvent //Coronal Mass Ejection
     {
-        public static List<GMS> AllEvents = new List<GMS>();
+        private double latitude;
+        public double Latitude { get => latitude; set => latitude = value; }
+        private double longitude;
+        public double Longitude { get => longitude; set => longitude = value; }
+        private double halfAngle;
+        public double HalfAngle { get => halfAngle; set => halfAngle = value; }
+        private double speed;
+        public double Speed { get => speed; set => speed = value; }
+        private string type;
+        public string Type { get => type; set => type = value; }
+        private string note;
+
+        public CME(double CMELatitude, double CMELongitude, double CMEHalfAngle, double CMESpeed, string CMEType, string CMENote, string CMEName, string CMEDate, string CMELink): base(CMEName, CMEDate, CMELink)
+        {
+            Latitude = CMELatitude;
+            Longitude = CMELongitude;
+            HalfAngle = CMEHalfAngle;
+            Speed = CMESpeed;
+            Type = CMEType;
+            Note = CMENote;
+        }
+
+        public string Note { get => note; set => note = value; }
     }
-    public class IPS //Interplanetary shock
+    public class GMS : SpaceEvent //Geomagnetic storm
     {
-        public static List<IPS> AllEvents = new List<IPS>();
+        private double kpIndex;
+        public double KpIndex { get => kpIndex; set => kpIndex = value; }
+        private string source;
+        public string Source { get => source; set => source = value; }
+        public GMS(double GMSKpIndex, string GMSSource, string GMSName, string GMSDate, string GMSLink): base(GMSName, GMSDate, GMSLink)
+        {
+            KpIndex = GMSKpIndex;
+            Source = GMSSource;
+        }
+
     }
-    public class FLR //Solar Flare
+    public class IPS : SpaceEvent //Interplanetary shock
     {
-        public static List<FLR> AllEvents = new List<FLR>();
+        private string location;
+        public string Location { get => location; set => location = value; }
+        public IPS(string IPSLocation, string IPSName, string IPSDate, string IPSLink): base(IPSName, IPSDate, IPSLink)
+        {
+            Location = IPSLocation;
+        }
     }
-    public class SEP //Solar Energetic Particle
+    public class FLR : SpaceEvent //Solar Flare
     {
-        public static List<SEP> AllEvents = new List<SEP>();
+        private string classType;
+        public string ClassType { get => classType; set => classType = value; }
+        private string sourceLocation;
+        public string SourceLocation { get => sourceLocation; set => sourceLocation = value; }
+        private int activeRegionNum;
+        public int ActiveRegionNum { get => activeRegionNum; set => activeRegionNum = value; }
+        private string instruments;
+        public string Instruments { get => instruments; set => instruments = value; }
+
+        public FLR(string FLRClassType, string FLRSourceLocation, int FLRActiveRegionNum, string FLRInstruments, string FLRName, string FLRDate, string FLRLink): base(FLRName, FLRDate, FLRLink)
+        {
+            ClassType = FLRClassType;
+            SourceLocation = FLRSourceLocation;
+            ActiveRegionNum = FLRActiveRegionNum;
+            Instruments = FLRInstruments;
+        }
     }
-    public class MPC //Magnetopause Crossing
+    public class SEP : SpaceEvent //Solar Energetic Particle
     {
-        public static List<MPC> AllEvents = new List<MPC>();
+        private string instruments;
+        public string Instruments { get => instruments; set => instruments = value; }
+        public SEP(string SEPInstruments, string SEPName, string SEPDate, string SEPLink): base(SEPName, SEPDate, SEPLink) 
+        {
+            Instruments = SEPInstruments;
+        }
     }
-    public class RBE //Radiation Belt Enhancement
+    public class MPC : SpaceEvent //Magnetopause Crossing
     {
-        public static List<RBE> AllEvents = new List<RBE>();
+        private string instruments;
+        public string Instruments { get => instruments; set => instruments = value; }
+        public MPC(string MPCInstruments, string MPCName, string MPCDate, string MPCLink) : base(MPCName, MPCDate, MPCLink)
+        {
+            Instruments = MPCInstruments;
+        }
     }
-    public class HSS //Hight Speed Stream
+    public class RBE : SpaceEvent //Radiation Belt Enhancement
     {
-        public static List<HSS> AllEvents = new List<HSS>();
+        private string instruments;
+        public string Instruments { get => instruments; set => instruments = value; }
+        public RBE(string RBEInstruments, string RBEName, string RBEDate, string RBELink) : base(RBEName, RBEDate, RBELink)
+        {
+            Instruments = RBEInstruments;
+        }
+    }
+    public class HSS : SpaceEvent //Hight Speed Stream
+    {
+        private string instruments;
+        public string Instruments { get => instruments; set => instruments = value; }
+        public HSS(string HSSInstruments, string HSSName, string HSSDate, string HSSLink) : base(HSSName, HSSDate, HSSLink)
+        {
+            Instruments = HSSInstruments;
+        }
     }
 }
