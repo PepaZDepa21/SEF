@@ -4,39 +4,43 @@
              x:Class="SEF.MainPage">
 
     <StackLayout>
-        <Grid>
+        <Grid Padding="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="30"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="2.4*"/>
             </Grid.RowDefinitions>
+            <Label Grid.Row="0" Text="{Binding APIKey}" TextColor="White"/>
             <ListView Grid.Row="0">
                 
             </ListView>
             <Grid Grid.Row="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20"/>
+                    <RowDefinition Height="40"/>
                     <RowDefinition Height="20"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="35"/>
                     <RowDefinition Height="20"/>
+                    <RowDefinition Height="40"/>
                     <RowDefinition Height="20"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="20"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="35"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="30"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="1" Grid.Column="0" Text="From:" VerticalOptions="Start"/>
-                <Label Grid.Row="1" Grid.Column="2" Text="To:" VerticalOptions="Start"/>
-                <DatePicker Grid.Row="2" Grid.Column="0" VerticalOptions="Start"/>
-                <DatePicker Grid.Row="2" Grid.Column="2" VerticalOptions="Start"/>
-                <Label Grid.Row="4" Grid.Column="0" Text="Event type:" VerticalOptions="Start"/>
-                <Picker Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3"/>
-                <Button Grid.Row="7" Grid.Column="0" Text="Search"/>
-                <Button Grid.Row="7" Grid.Column="0" Text="API Key"/>
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Text="API Key" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+                <Entry Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" VerticalOptions="Start" TextColor="Black" BackgroundColor="#CDE6F5" Text="{Binding APIKey}"/>
+                <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="From:" VerticalOptions="Center" TextColor="#CCFBFE" FontSize="Small"/>
+                <Label Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Text="To:" VerticalOptions="Center" TextColor="#CCFBFE" FontSize="Small"/>
+                <DatePicker Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Center" TextColor="Black" BackgroundColor="#CDE6F5" FontSize="Small" Date="{Binding Start}"/>
+                <DatePicker Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" VerticalOptions="Center" TextColor="Black" BackgroundColor="#CDE6F5" FontSize="Small" Date="{Binding End}"/>
+                <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Text="Event type:" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+                <Picker x:Name="eventsOptions" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="5" FontSize="Body" TextColor="Black" BackgroundColor="#CDE6F5" SelectedItem="{Binding EventOption}"/>
+                <Button Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" Text="Search" BackgroundColor="#40BCD8" TextColor="Black" FontSize="Small" Clicked="Search_Clicked"/>
             </Grid>
         </Grid>
     </StackLayout>

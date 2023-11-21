@@ -14,7 +14,7 @@ namespace SEF
             {
                 HeightRequest = 80,
                 BarBackgroundColor = Color.FromRgb(46, 35, 32),
-                BackgroundColor = Color.FromRgb(21, 11, 44),
+                BackgroundColor = Color.FromHex("#171D1C"),
                 BarTextColor = Color.FromHex("#B8CDF8"),
             };
         }
