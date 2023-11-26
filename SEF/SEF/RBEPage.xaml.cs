@@ -13,10 +13,11 @@ namespace SEF
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RBEPage : ContentPage
     {
-        public RBEPage(int index)
+        public RBEPage(int index, string type)
         {
             InitializeComponent();
             BindingContext = (RBE)SpaceEvent.AllEvents[index];
+            Title = type;
         }
     }
 }

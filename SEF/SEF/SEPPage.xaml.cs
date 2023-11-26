@@ -12,10 +12,11 @@ namespace SEF
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SEPPage : ContentPage
     {
-        public SEPPage(int index)
+        public SEPPage(int index, string type)
         {
             InitializeComponent();
             BindingContext = (SEP)SpaceEvent.AllEvents[index];
+            Title = type;
         }
     }
 }

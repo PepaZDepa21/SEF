@@ -12,10 +12,11 @@ namespace SEF
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class IPSPage : ContentPage
     {
-        public IPSPage(int index)
+        public IPSPage(int index, string type)
         {
             InitializeComponent();
             BindingContext = (IPS)SpaceEvent.AllEvents[index];
+            Title = type;
         }
     }
 }

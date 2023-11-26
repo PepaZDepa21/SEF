@@ -12,10 +12,11 @@ namespace SEF
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CMEPage : ContentPage
     {
-        public CMEPage(int index)
+        public CMEPage(int index, string type)
         {
             InitializeComponent();
             BindingContext = (CME)SpaceEvent.AllEvents[index];
+            Title = type;
         }
     }
 }

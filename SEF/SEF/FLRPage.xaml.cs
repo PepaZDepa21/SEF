@@ -13,10 +13,11 @@ namespace SEF
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FLRPage : ContentPage
     {
-        public FLRPage(int index)
+        public FLRPage(int index, string type)
         {
             InitializeComponent();
             BindingContext = (FLR)SpaceEvent.AllEvents[index];
+            Title = type;
         }
     }
 }

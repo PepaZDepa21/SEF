@@ -12,10 +12,11 @@ namespace SEF
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HSSPage : ContentPage
     {
-        public HSSPage(int index)
+        public HSSPage(int index, string type)
         {
             InitializeComponent();
             BindingContext = (HSS)SpaceEvent.AllEvents[index];
+            Title = type;
         }
     }
 }

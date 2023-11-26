@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using static SEF.Filter;
 using System.Diagnostics;
+using System.IO;
 
 namespace SEF
 {
@@ -32,6 +33,11 @@ namespace SEF
             Title = "Space Event Finder";
             eventsOptions.ItemsSource = Filter.GetEventShortcut.Keys.ToList();
             BindingContext = fil;
+            try
+            {
+                fil.APIKey = GetAPIKeyFromFile();
+            }
+            catch (Exception) { }
         }
 
         private async void Search_Clicked(object sender, EventArgs e)
@@ -91,13 +97,23 @@ namespace SEF
             try
             {
                 Button button = (Button)sender;
-                SelectPageToShow[filteredEvent](SpaceEvent.AllEvents.IndexOf((SpaceEvent)button.BindingContext));
+                SelectPageToShow[filteredEvent](SpaceEvent.AllEvents.IndexOf((SpaceEvent)button.BindingContext), filteredEvent);
                 
             }
             catch (Exception)
             {
                 throw;
             }
+        }
+        public string GetAPIKeyFromFile()
+        {
+            string key = "";
+            string[] lines = File.ReadAllLines(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "APIKey.txt"));
+            foreach (var item in lines)
+            {
+                key = item;
+            }
+            return key;
         }
         public void UpdateLW()
         {
@@ -109,15 +125,15 @@ namespace SEF
             SpaceEvent.AllEvents.Clear();
             UpdateLW();
         }
-        public void ShowCMEPage(int index) => Navigation.PushAsync(new CMEPage(index));
-        public void ShowGSTPage(int index) => Navigation.PushAsync(new GSTPage(index));
-        public void ShowIPSPage(int index) => Navigation.PushAsync(new IPSPage(index));
-        public void ShowFLRPage(int index) => Navigation.PushAsync(new FLRPage(index));
-        public void ShowSEPPage(int index) => Navigation.PushAsync(new SEPPage(index));
-        public void ShowMPCPage(int index) => Navigation.PushAsync(new MPCPage(index));
-        public void ShowRBEPage(int index) => Navigation.PushAsync(new RBEPage(index));
-        public void ShowHSSPage(int index) => Navigation.PushAsync(new HSSPage(index));
-        public delegate void ShowPage(int index);
+        public void ShowCMEPage(int index, string type) => Navigation.PushAsync(new CMEPage(index, type));
+        public void ShowGSTPage(int index, string type) => Navigation.PushAsync(new GSTPage(index, type));
+        public void ShowIPSPage(int index, string type) => Navigation.PushAsync(new IPSPage(index, type));
+        public void ShowFLRPage(int index, string type) => Navigation.PushAsync(new FLRPage(index, type));
+        public void ShowSEPPage(int index, string type) => Navigation.PushAsync(new SEPPage(index, type));
+        public void ShowMPCPage(int index, string type) => Navigation.PushAsync(new MPCPage(index, type));
+        public void ShowRBEPage(int index, string type) => Navigation.PushAsync(new RBEPage(index, type));
+        public void ShowHSSPage(int index, string type) => Navigation.PushAsync(new HSSPage(index, type));
+        public delegate void ShowPage(int index, string type);
     }
 
     public class Filter: INotifyPropertyChanged
@@ -193,17 +209,8 @@ namespace SEF
             set
             {
                 apiKey = value;
+                WriteAPIKeyToFile(value);
                 OnPropertyChanged(nameof(APIKey));
-            }
-        }
-        private string respons;
-        public string Respons
-        {
-            get => respons;
-            set
-            {
-                respons = value;
-                OnPropertyChanged(nameof(Respons));
             }
         }
         private void OnPropertyChanged(string property)
@@ -211,6 +218,18 @@ namespace SEF
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
         public bool IsOK() => APIKey != string.Empty && EventOption != string.Empty && DateTime.Compare(StartDate, EndDate) <= 0;
+        public void WriteAPIKeyToFile(string key)
+        {
+            using (StreamWriter sw = new StreamWriter(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "APIKey.txt")))
+            {
+                try
+                {
+                    sw.Write(key);
+                    sw.Flush();
+                }
+                catch (Exception) { }
+            }
+        }
     }
     
     public class SpaceEvent
@@ -321,9 +340,9 @@ namespace SEF
         public static IPS ParseDataToObject(dynamic data, int index)
         {
             string instruments = "";
-            foreach (var item2 in data.instruments)
+            foreach (var item in data.instruments)
             {
-                instruments += $"{item2.displayName}\n";
+                instruments += $"{item.displayName}\n";
             }
 
             Console.WriteLine(instruments.Substring(0, instruments.Length - 1));
@@ -351,7 +370,16 @@ namespace SEF
         }
         public FLR() { }
         public static FLR ParseDataToObject(dynamic data, int index)
-        => new FLR();
+        {
+            string instruments = "";
+            foreach (var item in data.instruments)
+            {
+                instruments += $"{item.displayName}\n";
+            }
+
+            Console.WriteLine();
+            return new FLR((string)data.classType, (string)data.sourceLocation, (int)data.activeRegionNum, (string)instruments.Substring(0, instruments.Length - 1), $"FLR-{index}", (DateTime)data.beginTime, (string)data.link);
+        }
     }
     public class SEP : SpaceEvent //Solar Energetic Particle
     {
@@ -363,7 +391,16 @@ namespace SEF
         }
         public SEP() { }
         public static SEP ParseDataToObject(dynamic data, int index)
-        => new SEP();
+        {
+            string instruments = "";
+            foreach (var item in data.instruments)
+            {
+                instruments += $"{item.displayName}\n";
+            }
+
+            Console.WriteLine();
+            return new SEP((string)instruments.Substring(0, instruments.Length - 1), $"SEP-{index}", (DateTime)data.eventTime, (string)data.link);
+        }
     }
     public class MPC : SpaceEvent //Magnetopause Crossing
     {
@@ -375,7 +412,16 @@ namespace SEF
         }
         public MPC() { }
         public static MPC ParseDataToObject(dynamic data, int index)
-        => new MPC();
+        {
+            string instruments = "";
+            foreach (var item2 in data.instruments)
+            {
+                instruments += $"{item2.displayName}\n";
+            }
+
+            Console.WriteLine();
+            return new MPC((string)instruments.Substring(0, instruments.Length - 1), $"MPC-{index}", (DateTime)data.eventTime, (string)data.link);
+        }
     }
     public class RBE : SpaceEvent //Radiation Belt Enhancement
     {
@@ -387,7 +433,16 @@ namespace SEF
         }
         public RBE() { }
         public static RBE ParseDataToObject(dynamic data, int index)
-        => new RBE();
+        {
+            string instruments = "";
+            foreach (var item in data.instruments)
+            {
+                instruments += $"{item.displayName}\n";
+            }
+
+            Console.WriteLine();
+            return new RBE((string)instruments.Substring(0, instruments.Length - 1), $"RBE-{index}", (DateTime)data.eventTime, (string)data.link);
+        }
     }
     public class HSS : SpaceEvent //Hight Speed Stream
     {
@@ -399,6 +454,15 @@ namespace SEF
         }
         public HSS() { }
         public static HSS ParseDataToObject(dynamic data, int index)
-        => new HSS();
+        {
+            string instruments = "";
+            foreach (var item in data.instruments)
+            {
+                instruments += $"{item.displayName}\n";
+            }
+
+            Console.WriteLine();
+            return new HSS((string)instruments.Substring(0, instruments.Length - 1), $"HSS-{index}", (DateTime)data.eventTime, (string)data.link);
+        }
     }
 }

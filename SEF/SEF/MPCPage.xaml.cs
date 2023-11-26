@@ -13,10 +13,11 @@ namespace SEF
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MPCPage : ContentPage
     {
-        public MPCPage(int index)
+        public MPCPage(int index, string type)
         {
             InitializeComponent();
-            BindingContext = (SEP)SpaceEvent.AllEvents[index];
+            BindingContext = (MPC)SpaceEvent.AllEvents[index];
+            Title = type;
         }
     }
 }
