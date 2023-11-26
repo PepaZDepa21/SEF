@@ -10,12 +10,14 @@ using Xamarin.Forms.Xaml;
 namespace SEF
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class GMSPage : ContentPage
+    public partial class GSTPage : ContentPage
     {
-        public GMSPage(int index)
+        public GSTPage(int index)
         {
             InitializeComponent();
-            BindingContext = (GMS)SpaceEvent.AllEvents[index];
+            GST gst = (GST)SpaceEvent.AllEvents[index];
+            BindingContext = gst;
+            LwKpIndex.ItemsSource = gst.KpIndexes;
         }
     }
 }
