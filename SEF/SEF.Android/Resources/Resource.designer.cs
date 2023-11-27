@@ -16595,7 +16595,7 @@ namespace SEF.Droid
 			public const int material_ic_menu_arrow_up_black_24dp = 2131165304;
 			
 			// aapt resource value: 0x7F070079
-			public const int MCE = 2131165305;
+			public const int MPC = 2131165305;
 			
 			// aapt resource value: 0x7F07007A
 			public const int mtrl_dialog_background = 2131165306;
