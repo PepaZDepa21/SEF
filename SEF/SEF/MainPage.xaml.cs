@@ -345,8 +345,7 @@ namespace SEF
                 instruments += $"{item.displayName}\n";
             }
 
-            Console.WriteLine(instruments.Substring(0, instruments.Length - 1));
-            return new IPS((string)data.location, instruments, $"IPS-{index}", (DateTime)data.eventTime, (string)data.link);
+            return new IPS((string)data.location, instruments.Substring(0, instruments.Length - 1), $"IPS-{index}", (DateTime)data.eventTime, (string)data.link);
         }
         public override string ToString() => Name;
     }
