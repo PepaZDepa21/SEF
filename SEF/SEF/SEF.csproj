@@ -20,28 +20,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="CMEPage.xaml">
+    <EmbeddedResource Update="Views\CMEPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="FLRPage.xaml">
+    <EmbeddedResource Update="Views\FLRPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="GSTPage.xaml">
+    <EmbeddedResource Update="Views\GSTPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="HSSPage.xaml">
+    <EmbeddedResource Update="Views\HSSPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="IPSPage.xaml">
+    <EmbeddedResource Update="Views\IPSPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="MPCPage.xaml">
+    <EmbeddedResource Update="Views\MPCPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="RBEPage.xaml">
+    <EmbeddedResource Update="Views\RBEPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="SEPPage.xaml">
+    <EmbeddedResource Update="Views\SEPPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
