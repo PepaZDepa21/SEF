@@ -19,6 +19,7 @@
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -29,15 +30,17 @@
                     <Label Grid.Row="1" Grid.Column="0" Text="Class Type" VerticalOptions="Start" TextColor="#06D6A0" FontSize="Small"/>
                     <Label Grid.Row="2" Grid.Column="0" Text="Source Location" VerticalOptions="Start" TextColor="#06D6A0" FontSize="Small"/>
                     <Label Grid.Row="3" Grid.Column="0" Text="Active Region Num" VerticalOptions="Start" TextColor="#06D6A0" FontSize="Small"/>
-                    <Label Grid.Row="4" Grid.Column="0" Text="Instruments" VerticalOptions="Start" TextColor="#06D6A0" FontSize="Small"/>
-                    <Label Grid.Row="5" Grid.Column="0" Text="Link:" VerticalOptions="Start" TextColor="#06D6A0" FontSize="Small"/>
+                    <Label Grid.Row="4" Grid.Column="0" Text="Linked Events" VerticalOptions="Start" TextColor="#06D6A0" FontSize="Small"/>
+                    <Label Grid.Row="5" Grid.Column="0" Text="Instruments" VerticalOptions="Start" TextColor="#06D6A0" FontSize="Small"/>
+                    <Label Grid.Row="6" Grid.Column="0" Text="Link:" VerticalOptions="Start" TextColor="#06D6A0" FontSize="Small"/>
 
                     <Label Grid.Row="0" Grid.Column="2" Text="{Binding Date}" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
                     <Label Grid.Row="1" Grid.Column="2" Text="{Binding ClassType}" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
                     <Label Grid.Row="2" Grid.Column="2" Text="{Binding SourceLocation}" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
                     <Label Grid.Row="3" Grid.Column="2" Text="{Binding ActiveRegionNum}" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
-                    <Label Grid.Row="4" Grid.Column="2" Text="{Binding Instruments}" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
-                    <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Link}" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+                    <Label Grid.Row="4" Grid.Column="2" Text="{Binding LinkedEvents}" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+                    <Label Grid.Row="5" Grid.Column="2" Text="{Binding Instruments}" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
+                    <Label Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Link}" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
                 </Grid>
             </ScrollView>
             <Image Grid.Row="2" Source="FLR.png"/>
