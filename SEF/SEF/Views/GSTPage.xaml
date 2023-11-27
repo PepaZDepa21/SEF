@@ -59,7 +59,7 @@
                     <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Link}" VerticalOptions="Start" TextColor="#CCFBFE" FontSize="Small"/>
                 </Grid>
             </ScrollView>
-            <Image Grid.Row="2"/>
+            <Image Grid.Row="2" Source="GST.png"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
