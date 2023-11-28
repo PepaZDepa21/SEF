@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Newtonsoft.Json;
 using System.Net.Http;
+using static SEF.Filter;
 using System.Diagnostics;
 using System.IO;
-using Xamarin.Essentials;
 
 namespace SEF
 {
@@ -31,7 +31,7 @@ namespace SEF
             SelectPageToShow.Add("Hight Speed Stream", ShowHSSPage);
             fil = new Filter(DateTime.Now, DateTime.Now);
             Title = "Space Event Finder";
-            eventsOptions.ItemsSource = Filter.GetEventShortcut.Keys.ToList();
+            eventsOptions.ItemsSource = GetEventShortcut.Keys.ToList();
             BindingContext = fil;
             try
             {
@@ -39,25 +39,11 @@ namespace SEF
             }
             catch (Exception) { }
             EnAPIKey.Unfocused += EnAPIKey_Unfocused;
-            UpdateTextFieldsBasedOnTheme();
         }
 
         private void EnAPIKey_Unfocused(object sender, FocusEventArgs e)
         {
             fil.WriteAPIKeyToFile(fil.APIKey);
-        }
-
-        public void UpdateTextFieldsBasedOnTheme()
-        {
-            AppTheme userTheme = (AppTheme)App.Current.RequestedTheme;
-
-            if (userTheme == AppTheme.Dark)
-            {
-                //EnAPIKey.TextColor = Color.White;
-                //DPFrom.TextColor = Color.White;
-                //DPTo.TextColor = Color.White;
-                //eventsOptions.TextColor = Color.White;
-            }
         }
 
         private async void Search_Clicked(object sender, EventArgs e)
@@ -93,7 +79,7 @@ namespace SEF
                         }
                         foreach (dynamic ev in data)
                         {
-                            SpaceEvent.AllEvents.Add((SpaceEvent)Filter.ChooseEventTypeToParse[filteredEvent](ev, index));
+                            SpaceEvent.AllEvents.Add((SpaceEvent)ChooseEventTypeToParse[filteredEvent](ev, index));
                             UpdateLW();
                             index++;
                         }
